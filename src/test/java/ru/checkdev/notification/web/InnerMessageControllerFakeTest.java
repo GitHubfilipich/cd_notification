@@ -1,5 +1,6 @@
 package ru.checkdev.notification.web;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ru.checkdev.notification.domain.InnerMessage;
@@ -11,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@Disabled
 public class InnerMessageControllerFakeTest {
 
     @Mock

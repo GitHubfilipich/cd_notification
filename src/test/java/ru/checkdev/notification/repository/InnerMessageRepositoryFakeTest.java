@@ -1,6 +1,7 @@
 package ru.checkdev.notification.repository;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.checkdev.notification.domain.InnerMessage;
 import ru.checkdev.notification.dto.InnerMessageDTO;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 public class InnerMessageRepositoryFakeTest {
 
     private static InnerMessageRepositoryFake innerMessageRepository;

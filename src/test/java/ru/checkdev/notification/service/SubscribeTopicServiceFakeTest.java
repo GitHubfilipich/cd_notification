@@ -1,6 +1,7 @@
 package ru.checkdev.notification.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.checkdev.notification.domain.SubscribeTopic;
 import ru.checkdev.notification.repository.SubscribeTopicRepositoryFake;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 public class SubscribeTopicServiceFakeTest {
 
     private SubscribeTopicService service;

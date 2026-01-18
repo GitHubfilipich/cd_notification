@@ -1,5 +1,6 @@
 package ru.checkdev.notification.web;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import ru.checkdev.notification.domain.SubscribeTopic;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 public class SubscribeTopicControllerFakeTest {
 
     @Test

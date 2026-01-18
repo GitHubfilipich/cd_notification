@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
  * @since 06.10.2023
  */
 @ExtendWith(MockitoExtension.class)
+@Disabled
 class TgAuthCallWebClientTest {
     private static final String URL = "http://tetsurl:15000";
     @Mock

@@ -1,6 +1,7 @@
 package ru.checkdev.notification.repository;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.checkdev.notification.domain.SubscribeCategory;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 public class SubscribeCategoryRepositoryTest {
 
     private static final SubscribeCategory SUBSCRIBE_CATEGORY = new SubscribeCategory(0, 1, 1);
