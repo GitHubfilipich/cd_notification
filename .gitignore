@@ -4,3 +4,7 @@ target
 .settings/
 .classpath
 .project
+/notification.iml
+/logs/notification.log
+/logs/notification.log.*
+/*.pid

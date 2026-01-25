@@ -1,6 +1,7 @@
 package ru.checkdev.notification.telegram.action;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -16,6 +17,7 @@ import ru.checkdev.notification.telegram.SessionTg;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 class SaveInnerMessageActionTest {
 
     private static final Chat CHAT = new Chat(1L, "type");

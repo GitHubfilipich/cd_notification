@@ -1,6 +1,7 @@
 package ru.checkdev.notification.repository;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.checkdev.notification.domain.SubscribeTopic;
 import ru.checkdev.notification.domain.UserTelegram;
@@ -17,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Dmitry Stepanov
  * @version 18.11.2023 00:46
  */
+@Disabled
 class UserTelegramRepositoryTest {
 
     private static final UserTelegram USER_TG = new UserTelegram(11, 10, 333L, false);

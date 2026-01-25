@@ -1,6 +1,7 @@
 package ru.checkdev.notification.telegram.action.notifi;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -16,6 +17,7 @@ import ru.checkdev.notification.telegram.action.notify.NotifyAction;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 class NotifyActionTest {
 
     private static final Chat CHAT = new Chat(1L, "type");

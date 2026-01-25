@@ -7,11 +7,12 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.checkdev.notification.domain.UserTelegram;
-import ru.checkdev.notification.repository.SubscribeTopicRepositoryFake;
-import ru.checkdev.notification.repository.UserTelegramRepositoryFake;
 import ru.checkdev.notification.service.UserTelegramService;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Dmitry Stepanov, user Dmitry
@@ -28,9 +29,7 @@ class RegAskNameActionTest {
 
     @BeforeEach
     public void init() {
-        userTelegramService = new UserTelegramService(
-                new UserTelegramRepositoryFake(
-                        new SubscribeTopicRepositoryFake()));
+        userTelegramService = mock(UserTelegramService.class);
         regAskNameAction = new RegAskNameAction(userTelegramService);
         message = new Message();
         update = new Update();
@@ -40,25 +39,32 @@ class RegAskNameActionTest {
     void whenAskNameActionChatIdIsPresentThenReturnMessageUserIsPresent() {
         message.setChat(CHAT);
         update.setMessage(message);
+
         UserTelegram userTelegram = new UserTelegram(0, 1, CHAT.getId(), false);
-        userTelegramService.save(userTelegram);
+        when(userTelegramService.findByChatId(CHAT.getId())).thenReturn(Optional.of(userTelegram));
+
         String expect = "Данный аккаунт Telegram уже зарегистрирован на сайте";
 
         SendMessage sendMessage = (SendMessage) regAskNameAction.handle(update).get();
         String actual = sendMessage.getText();
 
         assertThat(actual).isEqualTo(expect);
+        verify(userTelegramService, times(1)).findByChatId(CHAT.getId());
     }
 
     @Test
     void whenAskNameActionChatIdIsEmptyThenReturnMessageEnterName() {
         message.setChat(CHAT);
         update.setMessage(message);
+
+        when(userTelegramService.findByChatId(CHAT.getId())).thenReturn(Optional.empty());
+
         String expect = "Введите имя для регистрации нового пользователя:";
 
         SendMessage sendMessage = (SendMessage) regAskNameAction.handle(update).get();
         String actual = sendMessage.getText();
 
         assertThat(actual).isEqualTo(expect);
+        verify(userTelegramService, times(1)).findByChatId(CHAT.getId());
     }
 }
