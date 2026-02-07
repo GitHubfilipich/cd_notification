@@ -1,5 +1,7 @@
 package ru.checkdev.notification.telegram.service;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,8 @@ public class TgAuthCallWebClient implements TgCall {
      * @return Mono<Person>
      */
     @Override
+    @Retry(name = "tgAuthRetry")
+    @CircuitBreaker(name = "tgAuthCircuitBreaker", fallbackMethod = "fallbackGet")
     public Mono<Profile> doGet(String url) {
         return WebClient.create(uriProvider.getUri(SERVICE_ID))
                 .get()
@@ -47,6 +51,8 @@ public class TgAuthCallWebClient implements TgCall {
      * @return Mono<Person>
      */
     @Override
+    @Retry(name = "tgAuthRetry")
+    @CircuitBreaker(name = "tgAuthCircuitBreaker", fallbackMethod = "fallbackPost")
     public Mono<Object> doPost(String url, Profile profile) {
         return WebClient.create(uriProvider.getUri(SERVICE_ID))
                 .post()
@@ -58,6 +64,8 @@ public class TgAuthCallWebClient implements TgCall {
     }
 
     @Override
+    @Retry(name = "tgAuthRetry")
+    @CircuitBreaker(name = "tgAuthCircuitBreaker", fallbackMethod = "fallbackPost")
     public Mono<Object> doPost(String url) {
         return WebClient.create(uriProvider.getUri(SERVICE_ID))
                 .post()
@@ -65,5 +73,15 @@ public class TgAuthCallWebClient implements TgCall {
                 .retrieve()
                 .bodyToMono(Object.class)
                 .doOnError(err -> log.error("API not found: {}", err.getMessage()));
+    }
+
+    public Mono<Object> fallbackGet(String url, Throwable throwable) {
+        log.error("GET request failed, fallback triggered: {}", throwable.getMessage());
+        return Mono.empty();
+    }
+
+    public Mono<Object> fallbackPost(String url, Throwable throwable) {
+        log.error("POST request failed, fallback triggered: {}", throwable.getMessage());
+        return Mono.empty();
     }
 }
