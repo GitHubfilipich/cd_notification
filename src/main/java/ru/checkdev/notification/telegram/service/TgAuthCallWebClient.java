@@ -75,12 +75,17 @@ public class TgAuthCallWebClient implements TgCall {
                 .doOnError(err -> log.error("API not found: {}", err.getMessage()));
     }
 
-    public Mono<Object> fallbackGet(String url, Throwable throwable) {
+    public Mono<Profile> fallbackGet(String url, Throwable throwable) {
         log.error("GET request failed, fallback triggered: {}", throwable.getMessage());
         return Mono.empty();
     }
 
     public Mono<Object> fallbackPost(String url, Throwable throwable) {
+        log.error("POST request failed, fallback triggered: {}", throwable.getMessage());
+        return Mono.empty();
+    }
+
+    public Mono<Object> fallbackPost(String url, Profile profile, Throwable throwable) {
         log.error("POST request failed, fallback triggered: {}", throwable.getMessage());
         return Mono.empty();
     }
