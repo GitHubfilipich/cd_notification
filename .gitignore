@@ -8,3 +8,4 @@ target
 /logs/notification.log
 /logs/notification.log.*
 /*.pid
+/!!! info !!!.*

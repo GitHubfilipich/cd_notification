@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  db-notification:
+    image: postgres:15-alpine
+    container_name: db-notification
+    environment:
+      POSTGRES_DB: cd_notification
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5437:5432" # Проброс на 5437, так как 5433 уже занят под auth-db
+    volumes:
+      - postgres_data_notification:/var/lib/postgresql/data
+    networks:
+      - microservices-net
+
+  notification-service:
+    build: .
+    container_name: notification-service
+    ports:
+      - "9920:9920"
+    environment:
+      # Переопределяем БД на контейнер db-desc
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-notification:5432/cd_notification
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+
+      # Переопределяем Eureka (используем имя сервиса из вашей сети)
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka:9009/eureka
+
+      # Переопределяем Security (обращаемся к auth-service по имени контейнера)
+      - SECURITY_OAUTH2_RESOURCE_USERINFOURI=http://auth-service:9900/user
+
+      # Настройки для корректной регистрации в Eureka
+#      - EUREKA_INSTANCE_HOSTNAME=generator-service
+      - EUREKA_INSTANCE_HOSTNAME=host.docker.internal
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=false
+    depends_on:
+      - db-notification
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    external: true
+    name: microservices-net
+
+volumes:
+  postgres_data_notification: # Отдельный том для этой базы
