@@ -69,7 +69,7 @@ public class TgConfig {
                         new RegPutEmailAction(sessionTg),
                         new RegCheckEmailAction(sessionTg),
                         new RegSaveUserAction(sessionTg, tgCall, userTelegramService,
-                                uriProvider.getUri(SERVICE_ID))
+                                uriProvider, SERVICE_ID)
                 ),
                 "/check", List.of(new CheckAction(sessionTg, tgCall, userTelegramService)),
                 "/forget", List.of(new ForgetAction(sessionTg, tgCall, userTelegramService)),

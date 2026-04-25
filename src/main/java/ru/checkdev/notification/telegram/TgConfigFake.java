@@ -62,7 +62,7 @@ public class TgConfigFake {
                         new RegPutEmailAction(sessionTg),
                         new RegCheckEmailAction(sessionTg),
                         new RegSaveUserAction(sessionTg, tgCall, userTelegramService,
-                                String.format("%s/login", uriProvider.getUri(SERVICE_ID)))
+                                uriProvider, SERVICE_ID)
                 ),
                 "/check", List.of(new CheckAction(sessionTg, tgCall, userTelegramService)),
                 "/notify", List.of(new NotifyAction(sessionTg, userTelegramService)),

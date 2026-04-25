@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.checkdev.notification.domain.Profile;
 import ru.checkdev.notification.domain.UserTelegram;
 import ru.checkdev.notification.dto.ProfileTgDTO;
+import ru.checkdev.notification.service.EurekaUriProvider;
 import ru.checkdev.notification.service.UserTelegramService;
 import ru.checkdev.notification.telegram.SessionTg;
 import ru.checkdev.notification.telegram.action.Action;
@@ -37,7 +38,8 @@ public class RegSaveUserAction implements Action {
     private final SessionTg sessionTg;
     private final TgCall tgCall;
     private final UserTelegramService userTelegramService;
-    private final String urlSiteAuth;
+    private final EurekaUriProvider uriProvider;
+    private final String serviceID;
 
     @Override
     public Optional<BotApiMethod> handle(Update update) {
@@ -70,6 +72,7 @@ public class RegSaveUserAction implements Action {
             text = String.format("Сервис не доступен попробуйте позже%s%s", ls, "/start");
             return Optional.of(new SendMessage(chatId.toString(), text));
         }
+        String urlSiteAuth = uriProvider.getUri(serviceID);
         text = new StringBuilder().append("Вы зарегистрированы: ").append(ls)
                 .append("Имя: ").append(profile.getUsername()).append(ls)
                 .append("Email: ").append(profile.getEmail()).append(ls)
